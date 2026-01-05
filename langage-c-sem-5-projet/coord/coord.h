@@ -9,10 +9,10 @@ typedef struct {
     int y; // ordonnée
 } coord_t;
 
-// creer_cord
+// creer_coord
 // Précondition : aucune
 // Postcondition : retourne un point dont l'abscisse vaut x et l'ordonnée vaut y
-coord_t creer_cord(int x, int y);
+coord_t creer_coord(int x, int y);
 
 // get_x
 // Précondition : aucune

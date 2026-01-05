@@ -1,17 +1,20 @@
+#ifndef LISTE_NOEUD_H
+#define LISTE_NOEUD_H
+
 #include <stdbool.h>
 #include "coord.h"
 
 // TODO : type liste_noeud_t
-
+struct liste_noeud_s;
 // TODO : typedef
-
+typedef struct liste_noeud_s* liste_noeud_t;
 /**
  * creer_liste : crée une liste de noeuds, initialement vide
  *
  * Post-conditions : `r = creer_liste()` => `r != NULL`, `est_vide_liste(r)`
  * @return liste nouvellement créée (de type liste_noeud_t)
  */
-/* TODO : type retour */ creer_liste();
+/* TODO : type retour */ liste_noeud_t creer_liste(void);
 
 /**
  * detruire_liste : détruit la liste passée en paramètre
@@ -21,7 +24,7 @@
  *
  * @param liste_ptr pointeur sur la liste à détruire
  */
-void detruire_liste(/* TODO : type paramètre */ liste_ptr);
+void detruire_liste(/* TODO : type paramètre */liste_noeud_t liste_ptr);
 
 /**
  * est_vide_liste : test si la liste passée en paramètre est vide
@@ -31,7 +34,8 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @param liste [in] liste à tester
  * @return vrai ssi la liste ne contient aucun élément
  */
-// TODO : est_vide_liste
+// TODO : est_vide_liste 
+bool est_vide_liste(const liste_noeud_t liste);
 
 /**
  * contient_noeud_liste : test si le noeud donné appartient à la liste donnée.
@@ -43,6 +47,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @return vrai ssi noeud est dans liste
  */
 // TODO : contient_noeud_liste
+bool contient_noeud_liste(const liste_noeud_t liste, coord_t noeud);
 
 /**
  * contient_arrete_liste : test si l'arrête donnée appartient à la liste donnée.
@@ -57,6 +62,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @return vrai ssi l'arrête (source,destination) est dans liste
  */
 // TODO : contient_arrete_liste
+bool contient_arrete_liste(const liste_noeud_t liste, coord_t source, coord_t destination);
 
 /**
  * cout_noeud_liste : récupère le coût associé au noeud donné dans la liste donnée.
@@ -70,6 +76,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @return coût associé à noeud dans liste ou INFINITY si noeud n'est pas dans liste
  */
 // TODO : cout_noeud_liste
+double cout_noeud_liste(const liste_noeud_t liste, coord_t noeud);
 
 /**
  * precedent_noeud_liste : récupère le noeud précédent associé au noeud donné dans la liste donnée.
@@ -85,6 +92,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @return précédent associé au noeud dans la liste (ou coordonnées négatives si le noeud n'existe pas)
  */
 // TODO : precedent_noeud_liste
+coord_t precedent_noeud_liste(const liste_noeud_t liste, coord_t noeud);
 
 /**
  * min_noeud_liste : trouve le (un) noeud de la liste dont le coût heuristique associé est le plus petit.
@@ -97,6 +105,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @return noeud qui minimise le coût heuristique
  */
 // TODO : min_noeud_liste
+coord_t min_noeud_liste(const liste_noeud_t liste);
 
 /**
  * inserer_noeud_liste : modifie les valeurs associées au noeud donné dans la liste donnée, et ajoute
@@ -114,6 +123,7 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @param cout nouveau coût pour noeud
  */
 // TODO : inserer_noeud_liste
+void inserer_noeud_liste(liste_noeud_t liste, coord_t noeud, coord_t precedent, double cout);
 
 /**
  * supprimer_noeud_liste : supprime le noeud donné de la liste. Si le noeud n'est pas dans la liste,
@@ -126,6 +136,6 @@ void detruire_liste(/* TODO : type paramètre */ liste_ptr);
  * @param noeud noeud à supprimer de liste
  */
 // TODO : supprimer_noeud_liste
+void supprimer_noeud_liste(liste_noeud_t liste, coord_t noeud);
 
-
-
+#endif /* LISTE_NOEUD_H */
