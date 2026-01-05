@@ -131,6 +131,30 @@ void inserer_noeud_liste(liste_noeud_t l, coord_t n, coord_t prec, double cout) 
     // sinon, ajout en tête de liste
     cellule_t* nouvelle = malloc(sizeof(cellule_t));
     if (nouvelle != NULL) {
-        nouvelle-
+        nouvelle->noeud = n;
+        nouvelle->precedent = prec;
+        nouvelle->cout = cout;
+        nouvelle->suivant = l->tete;
+        l->tete = nouvelle;
+    }
+}
+
+void supprimer_noeud_liste(liste_noeud_t l, coord_t n) {
+    assert(l != NULL);
+    cellule_t* courant = l->tete;
+    cellule_t* precedent_cell = NULL;
+
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(n) && get_y(courant->noeud) == get_y(n)) {
+            if (precedent_cell == NULL) {
+                l->tete = courant->suivant;
+            } else {
+                precedent_cell->suivant = courant->suivant;
+            }
+            free(courant);
+            return;
+        }
+        precedent_cell = courant;
+        courant = courant->suivant;
     }
 }
