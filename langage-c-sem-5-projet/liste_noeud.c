@@ -29,25 +29,20 @@ liste_noeud_t creer_liste(void) {
     if (l != NULL) {
         l->tete = NULL;
     }
-    else {}
     return l;
 }
 
 void detruire_liste(liste_noeud_t* liste_ptr) {
     assert(liste_ptr != NULL);
-    if (*liste_ptr == NULL) {
-        return;
+    if (*liste_ptr == NULL) return;
+    cellule_t* courant = (*liste_ptr)->tete;
+    while (courant != NULL) {
+        cellule_t* a_supprimer = courant;
+        courant = courant->suivant;
+        free(a_supprimer);
     }
-    else {
-        cellule_t* courant = (*liste_ptr)->tete;
-        while (courant != NULL) {
-            cellule_t* a_supprimer = courant;
-            courant = courant->suivant;
-            free(a_supprimer);
-        }
-        free(*liste_ptr);
-        *liste_ptr = NULL;
-    }
+    free(*liste_ptr);
+    *liste_ptr = NULL;
 }
 
 /* Consultation */
@@ -59,5 +54,83 @@ bool est_vide_liste(const liste_noeud_t l) {
 
 bool contient_noeud_liste(const liste_noeud_t l, coord_t n) {
     assert(l != NULL);
-    cellule_t* courant = l->tete; 
+    cellule_t* courant = l->tete;
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(n) && get_y(courant->noeud) == get_y(n)) {
+            return true;
+        }
+        courant = courant->suivant;
+    }
+    return false;
+}
+
+bool contient_arrete_liste(const liste_noeud_t l, coord_t source, coord_t destination) {
+    assert(l != NULL);
+    cellule_t* courant = l->tete;
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(destination) && get_y(courant->noeud) == get_y(destination)) {
+            coord_t prec = courant->precedent;
+            return (get_x(prec) == get_x(source) && get_y(prec) == get_y(source));
+        }
+        courant = courant->suivant;
+    }
+    return false;
+}
+
+double cout_noeud_liste(const liste_noeud_t l, coord_t n) {
+    assert(l != NULL);
+    cellule_t* courant = l->tete;
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(n) && get_y(courant->noeud) == get_y(n)) {
+            return courant->cout;
+        }
+        courant = courant->suivant;
+    }
+    return INFINITY;
+}
+
+coord_t precedent_noeud_liste(const liste_noeud_t l, coord_t n) {
+    assert(l != NULL);
+    cellule_t* courant = l->tete;
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(n) && get_y(courant->noeud) == get_y(n)) {
+            return courant->precedent;
+        }
+        courant = courant->suivant;
+    }
+    return creer_coord(-1, -1); //coordonnées négatives si non trouvé
+}
+
+coord_t min_noeud_liste(const liste_noeud_t l) {
+    assert(l != NULL && !est_vide_liste(l));
+    cellule_t* courant = l->tete;
+    cellule_t* min_cell = l->tete;
+    while (courant != NULL) {
+        if (courant->cout < min_cell->cout) {
+            min_cell = courant;
+        }
+        courant = courant->suivant;
+    }
+    return min_cell->noeud;
+}
+
+/* Modification */
+
+void inserer_noeud_liste(liste_noeud_t l, coord_t n, coord_t prec, double cout) {
+    assert(l != NULL);
+    cellule_t* courant = l->tete;
+    //  recherche si le noeud existe déjà pour mise à jour
+    while (courant != NULL) {
+        if (get_x(courant->noeud) == get_x(n) && get_y(courant->noeud) == get_y(n)) {
+            courant->cout = cout;
+            courant->precedent = prec;
+            return;
+        }
+        courant = courant->suivant;
+    }
+    // sinon, ajout en tête de liste
+    cellule_t* nouvelle = malloc(sizeof(cellule_t));
+    if (nouvelle != NULL) {
+        nouvelle-
+    }
 }
