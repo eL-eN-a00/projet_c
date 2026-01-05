@@ -47,12 +47,12 @@ void detruire_liste(liste_noeud_t* liste_ptr) {
 
 /* Consultation */
 
-bool est_vide_liste(const liste_noeud_t l) {
+bool est_vide_liste(const liste_noeud_t* l) {
     assert(l != NULL);
     return l->tete == NULL;
 }
 
-bool contient_noeud_liste(const liste_noeud_t l, coord_t n) {
+bool contient_noeud_liste(const liste_noeud_t* l, coord_t n) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     while (courant != NULL) {
@@ -64,7 +64,7 @@ bool contient_noeud_liste(const liste_noeud_t l, coord_t n) {
     return false;
 }
 
-bool contient_arrete_liste(const liste_noeud_t l, coord_t source, coord_t destination) {
+bool contient_arrete_liste(const liste_noeud_t* l, coord_t source, coord_t destination) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     while (courant != NULL) {
@@ -77,7 +77,7 @@ bool contient_arrete_liste(const liste_noeud_t l, coord_t source, coord_t destin
     return false;
 }
 
-double cout_noeud_liste(const liste_noeud_t l, coord_t n) {
+double cout_noeud_liste(const liste_noeud_t* l, coord_t n) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     while (courant != NULL) {
@@ -89,7 +89,7 @@ double cout_noeud_liste(const liste_noeud_t l, coord_t n) {
     return INFINITY;
 }
 
-coord_t precedent_noeud_liste(const liste_noeud_t l, coord_t n) {
+coord_t precedent_noeud_liste(const liste_noeud_t* l, coord_t n) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     while (courant != NULL) {
@@ -101,7 +101,7 @@ coord_t precedent_noeud_liste(const liste_noeud_t l, coord_t n) {
     return creer_coord(-1, -1); //coordonnées négatives si non trouvé
 }
 
-coord_t min_noeud_liste(const liste_noeud_t l) {
+coord_t min_noeud_liste(const liste_noeud_t* l) {
     assert(l != NULL && !est_vide_liste(l));
     cellule_t* courant = l->tete;
     cellule_t* min_cell = l->tete;
@@ -116,7 +116,7 @@ coord_t min_noeud_liste(const liste_noeud_t l) {
 
 /* Modification */
 
-void inserer_noeud_liste(liste_noeud_t l, coord_t n, coord_t prec, double cout) {
+void inserer_noeud_liste(liste_noeud_t* l, coord_t n, coord_t prec, double cout) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     //  recherche si le noeud existe déjà pour mise à jour
@@ -139,7 +139,7 @@ void inserer_noeud_liste(liste_noeud_t l, coord_t n, coord_t prec, double cout) 
     }
 }
 
-void supprimer_noeud_liste(liste_noeud_t l, coord_t n) {
+void supprimer_noeud_liste(liste_noeud_t* l, coord_t n) {
     assert(l != NULL);
     cellule_t* courant = l->tete;
     cellule_t* precedent_cell = NULL;
