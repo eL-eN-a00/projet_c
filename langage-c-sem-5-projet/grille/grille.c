@@ -46,13 +46,16 @@ int get_profondeur(grille_t grille) {
 }
 
 coord_t inferieur_gauche(grille_t grille) {
-    int y = grille.profondeur; 
-    return creer_coord(0,y-1); 
+    // int y = grille.profondeur; 
+    //return creer_coord(0,y-1); 
+    return creer_coord(0,0); 
 }
 
 coord_t superieur_droit(grille_t grille){
+    int y = grille.profondeur;
     int x = grille.largeur; 
-    return creer_coord(x-1,0); 
+    //return creer_coord(x-1,0); 
+    return creer_coord (x-1,y-1); 
 }
 
 void set_hauteur(grille_t grille, coord_t position, float hauteur) {
