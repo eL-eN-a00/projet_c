@@ -18,31 +18,30 @@ typedef struct cellule_s {
 
 /* structure de contrôle de la liste */
 
-struct liste_noeud s {
+struct liste_noeud_s {
     cellule_t* tete;
 };
 
 /* cycle de vie */
 
-liste_noeud_t creer_liste(void) {
-    liste_noeud_t l = malloc(sizeof(struct liste_noeud_s));
+liste_noeud_t* creer_liste(void) {
+    liste_noeud_t* l = malloc(sizeof(struct liste_noeud_s));
     if (l != NULL) {
         l->tete = NULL;
     }
     return l;
 }
 
-void detruire_liste(liste_noeud_t* liste_ptr) {
+void detruire_liste(liste_noeud_t** liste_ptr) {
     assert(liste_ptr != NULL);
-    if (*liste_ptr == NULL) return;
-    cellule_t* courant = (*liste_ptr)->tete;
-    while (courant != NULL) {
-        cellule_t* a_supprimer = courant;
-        courant = courant->suivant;
-        free(a_supprimer);
-    }
-    free(*liste_ptr);
-    *liste_ptr = NULL;
+    if (*liste_ptr == NULL) {}
+    else {
+        cellule_t* courant = (*liste_ptr)->tete;
+        while (courant != NULL) {
+            cellule_t* a_supprimer = courant;
+            courant = courant->suivant;
+            free(a_supprimer);
+        }}
 }
 
 /* Consultation */
@@ -139,7 +138,7 @@ void inserer_noeud_liste(liste_noeud_t* l, coord_t n, coord_t prec, double cout)
         courant = courant->suivant;
     }
     // sinon, ajout en tête de liste
-    if !noeud_trouve {
+    if (!noeud_trouve) {
         cellule_t* nouvelle = malloc(sizeof(cellule_t));
         if (nouvelle != NULL) {
             nouvelle->noeud = n;
