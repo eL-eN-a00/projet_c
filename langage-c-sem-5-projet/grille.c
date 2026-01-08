@@ -34,7 +34,7 @@ void detruire_grille(grille_t grille) {
 bool dans_les_bornes(grille_t grille, coord_t position) {
     int x = get_x(position); 
     int y = get_y(position); 
-    return grille.largeur > x >= 0 && grille.profondeur > y >= 0; 
+    return grille.largeur > x && x>= 0 && grille.profondeur > y && y >= 0; 
 }
 
 int get_largeur(grille_t grille) {
@@ -48,6 +48,7 @@ int get_profondeur(grille_t grille) {
 coord_t inferieur_gauche(grille_t grille) {
     // int y = grille.profondeur; 
     //return creer_coord(0,y-1); 
+    (void)grille; 
     return creer_coord(0,0); 
 }
 
