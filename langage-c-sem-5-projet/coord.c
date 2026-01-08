@@ -46,5 +46,5 @@ float distance_euclidienne(coord_t p1, coord_t p2)
 {
     int dx = p2.x - p1.x;
     int dy = p2.y - p1.y;
-    return sqrtf((float)(dx * dx + dy * dy));
+    return (float)sqrt((float)(dx * dx + dy * dy));
 }

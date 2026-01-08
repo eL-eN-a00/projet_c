@@ -81,7 +81,7 @@ size_t get_voisins(grille_t grille, coord_t position, float seuil, coord_t** voi
     }
     if ((y > 0) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x,y-1))) <= seuil))  {
         *(voisins)[taille_voisins] = creer_coord (x,y-1);
-        taille_voisin++;
+        taille_voisins++;
     }
     if ((y < grille.profondeur - 1) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x,y+1))) <= seuil)) {
         *(voisins)[taille_voisins] = creer_coord (x,y+1);
