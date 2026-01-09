@@ -69,7 +69,7 @@ runtest_coord: test_coord
 	@echo "================= [   Test de coord   ] ================="
 	./test_coord
 
-runtest_liste_noeud: test_grille
+runtest_liste_noeud_grille: test_grille
 	@echo "================= [  Test de grille   ] ================="
 	./test_grille
 
@@ -97,7 +97,7 @@ test_coord: test_coord.o coord.o
 	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
 test_grille: test_grille.o grille.o coord.o
-	$(LD) $^ -o $@ $(TESTLDFLAGS)
+	$(LD) $^ -o $@ $(LDFLAGS_T)
 
 test_liste_noeud: test_liste_noeud.o coord.o grille.o liste_noeud.o
 	$(LD) $^ -o $@ $(LDFLAGS_T)
