@@ -34,7 +34,11 @@ void detruire_grille(grille_t grille) {
 bool dans_les_bornes(grille_t grille, coord_t position) {
     int x = get_x(position); 
     int y = get_y(position); 
+<<<<<<< HEAD
     return grille.largeur > x >= 0 && grille.profondeur > y >= 0; 
+=======
+    return grille.largeur > x && x>= 0 && grille.profondeur > y && y >= 0; 
+>>>>>>> f2ce7b2f3e22cf7764800b5566ad160c22e9ad35
 }
 
 int get_largeur(grille_t grille) {
@@ -46,13 +50,20 @@ int get_profondeur(grille_t grille) {
 }
 
 coord_t inferieur_gauche(grille_t grille) {
-    int y = grille.profondeur; 
-    return creer_coord(0,y-1); 
+    // int y = grille.profondeur; 
+    //return creer_coord(0,y-1); 
+<<<<<<< HEAD
+=======
+    (void)grille; 
+>>>>>>> f2ce7b2f3e22cf7764800b5566ad160c22e9ad35
+    return creer_coord(0,0); 
 }
 
 coord_t superieur_droit(grille_t grille){
+    int y = grille.profondeur;
     int x = grille.largeur; 
-    return creer_coord(x-1,0); 
+    //return creer_coord(x-1,0); 
+    return creer_coord (x-1,y-1); 
 }
 
 void set_hauteur(grille_t grille, coord_t position, float hauteur) {
@@ -72,6 +83,7 @@ size_t get_voisins(grille_t grille, coord_t position, float seuil, coord_t** voi
     *voisins = malloc(4 * sizeof(coord_t));
     
     if ((x > 0) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x-1,y))) <= seuil)) {
+<<<<<<< HEAD
         *(voisins)[taille_voisins] = creer_coord (x-1,y); 
         taille_voisins++;
     }
@@ -85,6 +97,21 @@ size_t get_voisins(grille_t grille, coord_t position, float seuil, coord_t** voi
     }
     if ((y < grille.profondeur - 1) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x,y+1))) <= seuil)) {
         *(voisins)[taille_voisins] = creer_coord (x,y+1);
+=======
+        (*voisins)[taille_voisins] = creer_coord (x-1,y); 
+        taille_voisins++;
+    }
+    if ((x < grille.largeur - 1) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x+1,y))) <= seuil)) {
+        (*voisins)[taille_voisins] = creer_coord (x+1,y);
+        taille_voisins++;
+    }
+    if ((y > 0) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x,y-1))) <= seuil))  {
+        (*voisins)[taille_voisins] = creer_coord (x,y-1);
+        taille_voisins++;
+    }
+    if ((y < grille.profondeur - 1) && (fabs (get_hauteur(grille, position) - get_hauteur(grille, creer_coord (x,y+1))) <= seuil)) {
+        (*voisins)[taille_voisins] = creer_coord (x,y+1);
+>>>>>>> f2ce7b2f3e22cf7764800b5566ad160c22e9ad35
         taille_voisins++;
     }
     return taille_voisins; 
