@@ -1,6 +1,8 @@
 #include "dijkstra.h"
 #include "animation.h"
 #include <math.h>
+#include <stdlib.h> 
+#include <stddef.h>
 
 /**
  * cout : calcule le coût pour rejoindre le noeud suivant depuis le noeud
@@ -23,14 +25,14 @@ static float calcul_cout(grille_t grille, coord_t courant, coord_t suivant) {
     //Calcul distance euclidinne
     int dx = get_x(courant) - get_x(suivant); 
     int dy = get_y(courant) - get_y(suivant);
-    float distance = sqrt(dx*dx + dy*dy);
+    float distance = (float)sqrt(dx*dx + dy*dy);
 
     //Calcul denivelé
     float hauteur_courant = get_hauteur(grille, courant);
     float hauteur_suivant = get_hauteur(grille, suivant); 
     float denivele = hauteur_suivant - hauteur_courant; 
 
-    return distance + fmaxf (0, denivele); 
+    return distance + fmaxf (0.0f, denivele); 
 }
 
 /**
@@ -50,19 +52,27 @@ static float calcul_cout(grille_t grille, coord_t courant, coord_t suivant) {
  */
 // TODO: construire_chemin_vers
 static void construire_chemin_vers (liste_noeud_t** chemin, liste_noeud_t* visites, coord_t source, coord_t noeud) {
-    if (get_x(source)==get_x(noeud) && get_y(source)==get_y(noeud)) {
-        double cout = cout_noeud_liste (visites, noeud);
-        inserer_noeud_liste(*chemin, source, source, cout);
-    }
+    // cas de base : on est arrivés à la source
+    if (chemin == NULL || *chemin == NULL ) {}
     else {
-        coord_t precedent = precedent_noeud_liste (visites, noeud); 
-        double cout = cout_noeud_liste (visites, noeud);
+        if (get_x(source)==get_x(noeud) && get_y(source)==get_y(noeud)) {
+            double cout = cout_noeud_liste (visites, source);
+            inserer_noeud_liste(*chemin, source, source, cout);
+        } else {
+            coord_t precedent = precedent_noeud_liste (visites, noeud); 
 
-        //Appel récursif de la fonction
-        construire_chemin_vers (chemin, visites, source, precedent);
+            // sécurité : éviter la boucle infinie si le graphe est mal formé
+            if (get_x(precedent) == get_x(noeud) && get_y(precedent) == get_y(noeud)) {}
+            else {
+                double cout = cout_noeud_liste(visites, noeud);
 
-        // Ajout du noeud (pour avoir le chemin de la source vers la destination) 
-        inserer_noeud_liste(*chemin, noeud, precedent, cout);
+                //Appel récursif d'abord pour construire la fonction dans le bon sens
+                construire_chemin_vers (chemin, visites, source, precedent);
+
+                // Ajout après l'appel récursif
+                inserer_noeud_liste(*chemin, noeud, precedent, cout);
+            }
+        }
     }
 }
 
@@ -76,7 +86,7 @@ float dijkstra(
     //Creer le chemin s'il n'existe pas 
     if (chemin != NULL) {
         *chemin = creer_liste();
-    }
+    } else {}
 
     //Initialiser les listes 
     liste_noeud_t* Visiter = creer_liste(); 
@@ -84,16 +94,21 @@ float dijkstra(
     inserer_noeud_liste(A_Visiter, source, source, 0.0);
 
     //Traiter les noeuds tant qu'il existe un noeud dans A_Visite
-    coord_t courant = source;  
     while (!est_vide_liste(A_Visiter)) {
+
         
-        //Trouver le cout minimal dans A_Visiter
-        courant = min_noeud_liste(A_Visiter); 
+        // Extraire le meilleur noeud
+        coord_t courant = min_noeud_liste(A_Visiter); 
 
 
-        //Ajouter le noeud courant dans Visiter 
+        // Récupérer ses infos avant de le supprimer
         coord_t precedent =  precedent_noeud_liste(A_Visiter, courant) ;
         double cout_courant = cout_noeud_liste(A_Visiter, courant);
+
+        // Le supprimer de la liste de travail immédiatement
+        supprimer_noeud_liste(A_Visiter, courant);
+
+        // L'ajouter aux noeuds finalisés
         inserer_noeud_liste(Visiter, courant, precedent, cout_courant);
 
         // On sort de la boucle si on trouve la destination (evite des calculs inutiles
@@ -101,44 +116,56 @@ float dijkstra(
             break;
         }
 
-        //Supprimer courant de A_Visiter
-        supprimer_noeud_liste(A_Visiter, courant); 
-
         //Trouver les voisins de courant non visités
         coord_t* voisins = NULL; 
         size_t nombre_voisins = get_voisins(grille, courant , seuil, &voisins);
-        for (int i=0; i < nombre_voisins; i++) {
-            
-            //Verifier que le voisin n'a pas encore était visité
-            if (!contient_noeud_liste(Visiter, voisins[i])){
-
-                // Ajout du voisin dans A_Visiter
-                if (!contient_noeud_liste(A_Visiter, voisins[i])){
-                    inserer_noeud_liste(A_Visiter, voisins[i], courant, INFINITY);
-                }
+        if (voisins != NULL) { 
+            for (size_t i = 0; i < nombre_voisins; i++) {
                 
-                //Calcul du cout pour aller de la source vers ce vosisin en passant par courant
-                double new_cout = cout_courant + (double) calcul_cout(grille, courant, voisins[i]); //Cout source->courant + Cout courant->voisin
+                //Verifier que le voisin n'a pas encore était visité
+                if (!contient_noeud_liste(Visiter, voisins[i])){
+                    //Calcul du cout pour aller de la source vers ce vosisin en passant par courant
+                    double n_cout = cout_courant + (double) calcul_cout(grille, courant, voisins[i]); //Cout source->courant + Cout courant->voisin
 
-                //Cout actuel du voisin
-                double old_cout = cout_noeud_liste(A_Visiter, voisins[i]);
-                
-                //Mettre à jour le cout uniquement si celui-ci est inférieur à celui determiné précédement
-                if (new_cout < old_cout) {
-                    inserer_noeud_liste(A_Visiter, voisins[i], courant, new_cout);
-                }
-            }        
+                    // Ajout du voisin dans A_Visiter
+                    if (!contient_noeud_liste(A_Visiter, voisins[i])){
+                        inserer_noeud_liste(A_Visiter, voisins[i], courant, n_cout);
+                    }
+                    else {
+                        //Cout actuel du voisin
+                        double old_cout = cout_noeud_liste(A_Visiter, voisins[i]);
+                        
+                        //Mettre à jour le cout uniquement si celui-ci est inférieur à celui determiné précédement
+                        if (n_cout < old_cout) {
+                            inserer_noeud_liste(A_Visiter, voisins[i], courant, n_cout);
+                        }
+                    }
+                }        
+            }
         }
         free(voisins);
     }
 
-    //On verifie que la destination a bien été visitée
+    float score_final = INFINITY;
+
+    // Verification de la réussite
     if (contient_noeud_liste(Visiter, destination)) {
-        construire_chemin_vers (chemin, Visiter, source, destination);
-        return (float) cout_noeud_liste(Visiter, destination);
+        score_final = (float) cout_noeud_liste(Visiter, destination);
+        if (chemin != NULL) {
+            construire_chemin_vers(chemin, Visiter, source, destination);
+        }
+        else {}
     }
     else {
-        inserer_noeud_liste(*chemin, destination, source, INFINITY); 
-        return INFINITY; 
+        // Si échec, on insère la destination avec un coût infini seulement si le chemin est demandé
+        if (chemin != NULL && *chemin != NULL) {
+            inserer_noeud_liste(*chemin, destination, source, INFINITY);
+        }
+        else {}
     }
+    detruire_liste(&Visiter);
+    detruire_liste(&A_Visiter);
+
+    return score_final;
+
 }

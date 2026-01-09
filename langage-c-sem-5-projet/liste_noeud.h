@@ -14,7 +14,7 @@ typedef struct liste_noeud_s liste_noeud_t;
  * Post-conditions : `r = creer_liste()` => `r != NULL`, `est_vide_liste(r)`
  * @return liste nouvellement créée (de type liste_noeud_t)
  */
-/* TODO : type retour */ liste_noeud_t creer_liste(void);
+/* TODO : type retour */ liste_noeud_t* creer_liste(void);
 
 /**
  * detruire_liste : détruit la liste passée en paramètre
@@ -24,7 +24,7 @@ typedef struct liste_noeud_s liste_noeud_t;
  *
  * @param liste_ptr pointeur sur la liste à détruire
  */
-void detruire_liste(/* TODO : type paramètre */liste_noeud_t* liste_ptr);
+void detruire_liste(/* TODO : type paramètre */liste_noeud_t** liste_ptr);
 
 /**
  * est_vide_liste : test si la liste passée en paramètre est vide

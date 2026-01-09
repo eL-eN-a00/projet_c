@@ -1,4 +1,4 @@
- This file is part of dijkstra.
+# This file is part of dijkstra.
 # 
 # dijkstra is free software: you can redistribute it and/or modify it under 
 # the terms of the GNU General Public License as published by the Free Software 
@@ -70,11 +70,7 @@ runtest_coord: test_coord
 	@echo "================= [   Test de coord   ] ================="
 	./test_coord
 
-<<<<<<< HEAD
 runtest_grille: test_grille
-=======
-runtest_liste_noeud_grille: test_grille
->>>>>>> f2ce7b2f3e22cf7764800b5566ad160c22e9ad35
 	@echo "================= [  Test de grille   ] ================="
 	./test_grille
 
@@ -102,7 +98,7 @@ test_coord: test_coord.o coord.o
 	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
 test_grille: test_grille.o grille.o coord.o
-	$(LD) $^ -o $@ $(LDFLAGS_T)
+	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
 test_liste_noeud: test_liste_noeud.o coord.o grille.o liste_noeud.o
 	$(LD) $^ -o $@ $(TESTLDFLAGS)

@@ -1,0 +1,15 @@
+Vérification de la syntaxe pour liste_noeud.h :
+gcc -std=c99 -c -Wall -Wextra -pedantic -Werror -fsyntax-only -x c liste_noeud.h
+Vérification de la syntaxe pour liste_noeud.c :
+gcc -std=c99 -c -Wall -Wextra -pedantic -Werror -fsyntax-only -x c liste_noeud.c
+Vérification de la syntaxe pour dijkstra.h :
+gcc -std=c99 -c -Wall -Wextra -pedantic -Werror -fsyntax-only -x c dijkstra.h
+Vérification de la syntaxe pour dijkstra.c :
+gcc -std=c99 -c -Wall -Wextra -pedantic -Werror -fsyntax-only -x c dijkstra.c
+In file included from app.h:28,
+                 from animation.h:4,
+                 from dijkstra.c:2:
+viewport.h:32:10: fatal error: SDL2/SDL_rect.h: Aucun fichier ou dossier de ce nom
+   32 | #include <SDL2/SDL_rect.h>
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
