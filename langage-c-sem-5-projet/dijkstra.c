@@ -73,6 +73,11 @@ float dijkstra(
         liste_noeud_t** chemin
     ) {
 
+    //Creer le chemin s'il n'existe pas 
+    if (chemin != NULL) {
+        *chemin = creer_liste();
+    }
+
     //Initialiser les listes 
     liste_noeud_t* Visiter = creer_liste(); 
     liste_noeud_t* A_Visiter = creer_liste(); 
