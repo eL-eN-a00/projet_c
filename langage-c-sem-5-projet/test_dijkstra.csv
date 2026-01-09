@@ -1,0 +1,7 @@
+#,File,Section,Test,Succ?,Fail?,Sign?,Time?,Unkn?,Line,Signum
+0,test_dijkstra.c,"dijkstra","dijkstra-1x1",,1,,,,123,
+1,test_dijkstra.c,"dijkstra","dijkstra-1x1-no-path",,1,,,,137,
+2,test_dijkstra.c,"dijkstra","dijkstra-2x2",,1,,,,156,
+3,test_dijkstra.c,"dijkstra","dijkstra-2x2-peak",,1,,,,180,
+4,test_dijkstra.c,"dijkstra","dijkstra-2x2-peak-start",,1,,,,204,
+5,test_dijkstra.c,"dijkstra","dijkstra-3x3",,1,,,,230,

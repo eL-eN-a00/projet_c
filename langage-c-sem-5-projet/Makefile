@@ -18,10 +18,11 @@ CC=gcc
 SDL=/mnt/n7fs/ens/tp_dupont/clibs/SDL2
 CFLAGS_D=-g -Wall -Wextra -pedantic -O0 -D_REENTRANT -D_DEBUG -DSTRICT_THREADING -I$(SDL)
 CFLAGS=-Wall -Wextra -O2 -D_REENTRANT -I$(SDL)
+TESTCFLAGS=-g -Wall -Wextra -pedantic -O0 -D_REENTRANT -D_DEBUG -DSTRICT_THREADING -I$(SDL)
 LD=gcc
 LDFLAGS=-lm -lrt -L$(SDL) -lSDL2 -lSDL2_ttf -lSDL2_gfx -ldl -lpthread
 LDFLAGS_D= $(LDFLAGS) #-lmcheck
-LDFLAGS_T=-lm -lrt -L. -lt
+TESTLDFLAGS=-lm -lrt -L. -lt
 OBJECTS= \
 	point.o viewport.o grille_view.o window.o app.o liste_noeud.o grille.o coord.o grille_file.o \
 	animation.o dijkstra.o creer_grille.o \
@@ -69,7 +70,7 @@ runtest_coord: test_coord
 	@echo "================= [   Test de coord   ] ================="
 	./test_coord
 
-runtest_liste_noeud: test_grille
+runtest_grille: test_grille
 	@echo "================= [  Test de grille   ] ================="
 	./test_grille
 
@@ -100,10 +101,10 @@ test_grille: test_grille.o grille.o coord.o
 	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
 test_liste_noeud: test_liste_noeud.o coord.o grille.o liste_noeud.o
-	$(LD) $^ -o $@ $(LDFLAGS_T)
+	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
-test_dijkstra: test_dijkstra.o coord.o grille.o liste_noeud.o dijkstra.o
-	$(LD) $^ -o $@ $(LDFLAGS_T)
+test_dijkstra: test_dijkstra.o coord.o grille.o liste_noeud.o dijkstra.o mock_animation.o
+	$(LD) $^ -o $@ $(TESTLDFLAGS)
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c $< -o $@
