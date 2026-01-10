@@ -1,0 +1,6 @@
+Horodatage : Fri Jan  9 22:44:59 CET 2026
+Groupe : KL
+NOM 1 : CORTINAS GARCIA
+Prénom 1 : Elena
+NOM 2 : SUBRA
+Prénom 2 : Marie
